@@ -1,0 +1,27 @@
+<h1>Listing kicadnetlists</h1>
+
+<table>
+  <tr>
+    <th>xml</th>
+    <th>tool</th>
+    <th>date</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @kicadnetlists.each do |kicadnetlist| %>
+  <tr>
+    <td><%= link_to icon('cloud-download'),kicadnetlist.xml.url %> </td>
+    <td><%= kicadnetlist.tool %></td>
+    <td><%= kicadnetlist.date %></td>
+    <td><%= link_to 'Show', kicadnetlist %></td>
+    <td><%= link_to 'Edit', edit_kicadnetlist_path(kicadnetlist) %></td>
+    <td><%= link_to 'Destroy', kicadnetlist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Kicadnetlist', new_kicadnetlist_path, class:'btn btn-primary' %>

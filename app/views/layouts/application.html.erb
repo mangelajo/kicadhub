@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mailrelay - Multiple</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <%= link_to "KiCadHub", root_path, :class => :brand %>
+      <div class="nav-collapse">
+        <p class="navbar-text pull-right">Logged in as <%=link_to("ajo" "ajo")%> (<%=link_to 'Logout', "destroy_user_session_path", :method => :delete%>)</p>
+
+        <form class="navbar-search pull-right top-search-form">
+          <input type="text" class="span1" placeholder="<%=t('ransack.search').titleize%>" accesskey="s" id="main-search">
+        </form>
+
+        <ul class="nav">
+          <li <%='class="active"'.html_safe if params[:controller] == 'dashboard' %>><%=link_to 'Dashboard', root_path %></li>
+          <li <%='class="active"'.html_safe if params[:controller] == 'kicadnetlist' %>><%=link_to t('activerecord.models.kicadnetlist'), kicadnetlists_url %></li>
+
+
+          <li class="dropdown">
+            <a href="#" id="drop" role="button" data-toggle="dropdown" class="dropdown-toggle"><%=t('tools.menu')%> <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="drop">
+              <li>Option 1</li>
+              <li>Option 2</li>
+
+              <li class="divider"></li>
+              <li>Option A</li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container content">
+
+  <% if notice %><div class="alert alert-info"><%= notice %></div><% end %>
+  <% if alert %><div class="alert"><%= alert %></div><% end %>
+  <% if flash[:success] %><div class="alert alert-success"><%= flash[:success] %></div><% end %>
+  <% if flash[:error] %><div class="alert alert-error"><%= flash[:error] %></div><% end %>
+
+  <%= yield %>
+
+  <footer class="footer" style="padding-top:2em;">
+    <p class="pull-right"><a href="#"><%=t('common.back_to_top')%></a></p>
+    <p>&copy; 2013 KiCad hub</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

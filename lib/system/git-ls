@@ -1,0 +1,3 @@
+#!/bin/sh
+remote_url=${1:? "$0 requires URL as argument"}
+curl -s $remote_url | grep js-directory-link | sed "s/.* title=\"\(.*\)\".*/\1/"
