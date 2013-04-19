@@ -355,6 +355,7 @@ DEPENDENCIES
   less-rails
   meta_request
   mysql2
+  nokogiri
   paper_trail (~> 2)
   paperclip (~> 3.0)
   poltergeist
