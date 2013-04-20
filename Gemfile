@@ -117,8 +117,8 @@ gem 'country_select'
 
 #allow yaml files to be edited online
 #gem 'safe_yaml','0.7.1'
-gem 'tolk' , :git=>"https://github.com/mangelajo/tolk.git"
-gem 'ya2yaml'  # used to export yaml files in urls...
+#gem 'tolk' , :git=>"https://github.com/mangelajo/tolk.git"
+#gem 'ya2yaml'  # used to export yaml files in urls...
 
 # api documentation
 gem 'apipie-rails' , :git=>"https://github.com/mangelajo/apipie-rails.git"
@@ -127,4 +127,6 @@ gem 'apipie-rails' , :git=>"https://github.com/mangelajo/apipie-rails.git"
 gem 'github_api'
 gem "paperclip", "~> 3.0"
 gem 'nokogiri'
-
+#gem 'octopart', :path=>'/Users/ajo/Documents/work/nbee/octopart'
+gem 'rails-sh'
+gem 'rubyzip'

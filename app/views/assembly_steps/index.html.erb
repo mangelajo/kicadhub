@@ -1,0 +1,50 @@
+<%- model_class = AssemblyStep -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:assembly_guide_id) %></th>
+      <th><%= model_class.human_attribute_name(:reference_id) %></th>
+      <th><%= model_class.human_attribute_name(:index) %></th>
+      <th><%= model_class.human_attribute_name(:preview_file_name) %></th>
+      <th><%= model_class.human_attribute_name(:preview_content_type) %></th>
+      <th><%= model_class.human_attribute_name(:preview_file_size) %></th>
+      <th><%= model_class.human_attribute_name(:preview_updated_at) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @assembly_steps.each do |assembly_step| %>
+      <tr>
+        <td><%= link_to assembly_step.id, assembly_step_path(assembly_step) %></td>
+        <td><%= assembly_step.name %></td>
+        <td><%= assembly_step.assembly_guide_id %></td>
+        <td><%= assembly_step.reference_id %></td>
+        <td><%= assembly_step.index %></td>
+        <td><%= assembly_step.preview_file_name %></td>
+        <td><%= assembly_step.preview_content_type %></td>
+        <td><%= assembly_step.preview_file_size %></td>
+        <td><%= assembly_step.preview_updated_at %></td>
+        <td><%=l assembly_step.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_assembly_step_path(assembly_step), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      assembly_step_path(assembly_step),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_assembly_step_path,
+            :class => 'btn btn-primary' %>

@@ -1,27 +1,42 @@
-<h1>Listing kicadnetlists</h1>
-
-<table>
-  <tr>
-    <th>xml</th>
-    <th>tool</th>
-    <th>date</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @kicadnetlists.each do |kicadnetlist| %>
-  <tr>
-    <td><%= link_to icon('cloud-download'),kicadnetlist.xml.url %> </td>
-    <td><%= kicadnetlist.tool %></td>
-    <td><%= kicadnetlist.date %></td>
-    <td><%= link_to 'Show', kicadnetlist %></td>
-    <td><%= link_to 'Edit', edit_kicadnetlist_path(kicadnetlist) %></td>
-    <td><%= link_to 'Destroy', kicadnetlist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<%- model_class = Kicadnetlist -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:date) %></th>
+      <th><%= model_class.human_attribute_name(:tool) %></th>
+      <th><%= model_class.human_attribute_name(:xml) %></th>
+      <th><%= model_class.human_attribute_name(:xml_updated_at) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @kicadnetlists.each do |kicadnetlist| %>
+      <tr>
+        <td><%= link_to kicadnetlist.id, kicadnetlist_path(kicadnetlist) %></td>
+        <td><%= kicadnetlist.date %></td>
+        <td><%= kicadnetlist.tool %></td>
+        <td><%= link_to icon('cloud-download'),kicadnetlist.xml.url %> </td>
+        <td><%= kicadnetlist.xml_updated_at %></td>
+        <td><%=l kicadnetlist.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_kicadnetlist_path(kicadnetlist), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      kicadnetlist_path(kicadnetlist),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<br />
-
-<%= link_to 'New Kicadnetlist', new_kicadnetlist_path, class:'btn btn-primary' %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_kicadnetlist_path,
+            :class => 'btn btn-primary' %>

@@ -1,0 +1,39 @@
+<%- model_class = Pcb -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
+  <dd><%= @pcb.title %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @pcb.description %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:file_file_name) %>:</strong></dt>
+  <dd><%= @pcb.file_file_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:file_content_type) %>:</strong></dt>
+  <dd><%= @pcb.file_content_type %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:file_file_size) %>:</strong></dt>
+  <dd><%= @pcb.file_file_size %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:file_updated_at) %>:</strong></dt>
+  <dd><%= @pcb.file_updated_at %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:preview_file_name) %>:</strong></dt>
+  <dd><%= @pcb.preview_file_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:preview_content_type) %>:</strong></dt>
+  <dd><%= @pcb.preview_content_type %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:preview_file_size) %>:</strong></dt>
+  <dd><%= @pcb.preview_file_size %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:preview_updated_at) %>:</strong></dt>
+  <dd><%= @pcb.preview_updated_at %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              pcbs_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_pcb_path(@pcb), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              pcb_path(@pcb),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>

@@ -1,0 +1,60 @@
+<%- model_class = ReferencePrint -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:type) %></th>
+      <th><%= model_class.human_attribute_name(:assembly_guide_id) %></th>
+      <th><%= model_class.human_attribute_name(:reference_id) %></th>
+      <th><%= model_class.human_attribute_name(:index) %></th>
+      <th><%= model_class.human_attribute_name(:file_file_name) %></th>
+      <th><%= model_class.human_attribute_name(:file_content_type) %></th>
+      <th><%= model_class.human_attribute_name(:file_file_size) %></th>
+      <th><%= model_class.human_attribute_name(:file_updated_at) %></th>
+      <th><%= model_class.human_attribute_name(:preview_file_name) %></th>
+      <th><%= model_class.human_attribute_name(:preview_content_type) %></th>
+      <th><%= model_class.human_attribute_name(:preview_file_size) %></th>
+      <th><%= model_class.human_attribute_name(:preview_updated_at) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reference_prints.each do |reference_print| %>
+      <tr>
+        <td><%= link_to reference_print.id, reference_print_path(reference_print) %></td>
+        <td><%= reference_print.name %></td>
+        <td><%= reference_print.type %></td>
+        <td><%= reference_print.assembly_guide_id %></td>
+        <td><%= reference_print.reference_id %></td>
+        <td><%= reference_print.index %></td>
+        <td><%= reference_print.file_file_name %></td>
+        <td><%= reference_print.file_content_type %></td>
+        <td><%= reference_print.file_file_size %></td>
+        <td><%= reference_print.file_updated_at %></td>
+        <td><%= reference_print.preview_file_name %></td>
+        <td><%= reference_print.preview_content_type %></td>
+        <td><%= reference_print.preview_file_size %></td>
+        <td><%= reference_print.preview_updated_at %></td>
+        <td><%=l reference_print.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_reference_print_path(reference_print), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      reference_print_path(reference_print),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_reference_print_path,
+            :class => 'btn btn-primary' %>

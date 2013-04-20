@@ -1,0 +1,17 @@
+<%= simple_form_for @pcb, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :title %>
+  <%= f.input :description %>
+  <%= f.input :file_file_name %>
+  <%= f.input :file_content_type %>
+  <%= f.input :file_file_size %>
+  <%= f.input :file_updated_at %>
+  <%= f.input :preview_file_name %>
+  <%= f.input :preview_content_type %>
+  <%= f.input :preview_file_size %>
+  <%= f.input :preview_updated_at %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                pcbs_path, :class => 'btn' %>
+  </div>
+<% end %>

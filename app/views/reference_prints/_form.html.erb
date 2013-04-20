@@ -1,0 +1,20 @@
+<%= simple_form_for @reference_print, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :name %>
+  <%= f.input :type %>
+  <%= f.input :assembly_guide_id %>
+  <%= f.input :reference_id %>
+  <%= f.input :index %>
+  <%= f.input :file_file_name %>
+  <%= f.input :file_content_type %>
+  <%= f.input :file_file_size %>
+  <%= f.input :file_updated_at %>
+  <%= f.input :preview_file_name %>
+  <%= f.input :preview_content_type %>
+  <%= f.input :preview_file_size %>
+  <%= f.input :preview_updated_at %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                reference_prints_path, :class => 'btn' %>
+  </div>
+<% end %>

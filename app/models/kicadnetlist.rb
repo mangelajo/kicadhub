@@ -12,6 +12,7 @@ class Kicadnetlist < ActiveRecord::Base
       return f.read
     end
   end
+
   def scan_xml
     doc = Nokogiri::XML::Document.parse(xml_contents)    { |config| config.nonet }
     @components = scan_components(doc.search('comp'))
@@ -32,7 +33,7 @@ class Kicadnetlist < ActiveRecord::Base
 
       cmp['fields'] = scan_fields( c.search('fields/field') )
 
-      components.append(cmp)
+      components.append(Hashie::Mash.new(cmp))
     end
     return components
   end

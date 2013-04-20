@@ -1,4 +1,19 @@
 Kicadhub::Application.routes.draw do
+  resources :reference_prints
+
+
+  resources :assembly_steps
+
+
+  resources :components
+
+
+  resources :assembly_guides
+
+
+  resources :pcbs
+
+
   resources :kicadnetlists
 
   root :to => 'kicadnetlists#index'

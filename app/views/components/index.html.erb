@@ -1,0 +1,52 @@
+<%- model_class = Component -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:manufacturer) %></th>
+      <th><%= model_class.human_attribute_name(:footprint) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <th><%= model_class.human_attribute_name(:datasheet_url) %></th>
+      <th><%= model_class.human_attribute_name(:manufacturer_cmp_url) %></th>
+      <th><%= model_class.human_attribute_name(:mpn) %></th>
+      <th><%= model_class.human_attribute_name(:octopart_uid) %></th>
+      <th><%= model_class.human_attribute_name(:octopart_url) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @components.each do |component| %>
+      <tr>
+        <td><%= link_to component.id, component_path(component) %></td>
+        <td><%= component.name %></td>
+        <td><%= component.manufacturer %></td>
+        <td><%= component.footprint %></td>
+        <td><%= component.description %></td>
+        <td><%= component.datasheet_url %></td>
+        <td><%= component.manufacturer_cmp_url %></td>
+        <td><%= component.mpn %></td>
+        <td><%= component.octopart_uid %></td>
+        <td><%= component.octopart_url %></td>
+        <td><%=l component.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_component_path(component), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      component_path(component),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_component_path,
+            :class => 'btn btn-primary' %>
