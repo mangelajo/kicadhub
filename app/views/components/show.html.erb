@@ -5,26 +5,34 @@
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @component.name %></dd>
+  <dd><%= @component.name %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:manufacturer) %>:</strong></dt>
-  <dd><%= @component.manufacturer %></dd>
+  <dd><%= @component.manufacturer %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:footprint) %>:</strong></dt>
-  <dd><%= @component.footprint %></dd>
+  <dd><%= @component.footprint %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
-  <dd><%= @component.description %></dd>
+  <dd><%= @component.description %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:datasheet_url) %>:</strong></dt>
-  <dd><%= @component.datasheet_url %></dd>
+  <dd><%= @component.datasheet_url %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:manufacturer_cmp_url) %>:</strong></dt>
-  <dd><%= @component.manufacturer_cmp_url %></dd>
+  <dd><%= @component.manufacturer_cmp_url %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:mpn) %>:</strong></dt>
-  <dd><%= @component.mpn %></dd>
+  <dd><%= @component.mpn %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:octopart_uid) %>:</strong></dt>
-  <dd><%= @component.octopart_uid %></dd>
+  <dd><%= @component.octopart_uid %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:octopart_url) %>:</strong></dt>
-  <dd><%= @component.octopart_url %></dd>
+  <dd><%= @component.octopart_url %>&nbsp;</dd>
+  <dt><strong><%= model_class.human_attribute_name(:value) %>:</strong></dt>
+  <dd><%= @component.value %>&nbsp;</dd>
+  <dt><strong><%= model_class.human_attribute_name(:schlib_part) %>:</strong></dt>
+  <dd><%= @component.schlib_part %>&nbsp;</dd>
+  <dt><strong><%= model_class.human_attribute_name(:schlib_name) %>:</strong></dt>
+  <dd><%= @component.schlib_name %>&nbsp;</dd>
 </dl>
 
-<div class="form-actions">
+<%= render(partial:'components/suppliers',:locals=>{component:@component}) %>
+
+<div class="form-actions span12">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               components_path, :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),

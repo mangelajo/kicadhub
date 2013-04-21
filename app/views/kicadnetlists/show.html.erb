@@ -13,7 +13,10 @@
 
 </dl>
 
-<div class="form-actions">
+<%= render(partial:'kicadnetlists/components') %>
+<%= render(partial:'kicadnetlists/references') %>
+
+<div class="form-actions span12">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               kicadnetlists_path, :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),

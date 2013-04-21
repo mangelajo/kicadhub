@@ -15,5 +15,21 @@
 .btn a:visited
 {
     color:white;
+}
+.btn-primary a:visited
+{
+    color:white;
+}
+.btn-danger a:visited
+{
+    color:white;
+}
 
+.label-info a
+{
+    color:white;
+}
+.label-info a:visited
+{
+    color:white;
 }

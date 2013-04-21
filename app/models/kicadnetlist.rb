@@ -7,27 +7,24 @@ class Kicadnetlist < ActiveRecord::Base
   has_many :components, :through => :references
 
   belongs_to :pcb
+  before_save :scan_xml
 
-  def netlist_components
-    return @components unless @components.nil?
-    self.scan_xml
-    return @components
-  end
-
-  def render_references
-    self.references.destroy_all
-    netlist_components.each do |netlist_component|
-       self.references << Reference.create_from_netlist_component(netlist_component)
-
-    end
-
-  end
 
   def render_assembly
-    self.scan_xml
     self.pcb.assembly_guides.destroy_all unless self.pcb.nil?
-
   end
+
+  # data building
+
+  def render_references(netlist_components)
+    self.references.destroy_all
+    netlist_components.each do |component|
+      self.references << Reference.create_from_netlist_component(component,self)
+    end
+  end
+
+
+  # XML Scanning
 
   def xml_contents
     xml.save
@@ -39,7 +36,8 @@ class Kicadnetlist < ActiveRecord::Base
   def scan_xml
     return unless @components.nil?
     doc = Nokogiri::XML::Document.parse(xml_contents)    { |config| config.nonet }
-    @components = scan_components(doc.search('comp'))
+    self.tool = doc.search('design/tool').first.children.text
+    render_references( scan_components(doc.search('comp')))
   end
 
 
@@ -47,6 +45,12 @@ class Kicadnetlist < ActiveRecord::Base
     components = []
     xml_components.each do |c|
       cmp= {}
+
+      ref = c.attributes['ref'].value
+
+      if ref.nil?
+        puts "why am I nil?, who am I? #{c.inspect}"
+      end
 
       cmp['ref'] = c.attributes['ref'].value
 

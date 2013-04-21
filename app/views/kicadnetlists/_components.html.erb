@@ -1,0 +1,33 @@
+
+<h2><%= "Components" %></h2>
+<div class="span12">
+
+    <table class="table table-striped span12">
+        <thead>
+        <tr>
+          <th><%= "Component" %></th><th><%="Octopart Link" %></th><th><%="Component Footprint" %></th> <th><%= "References"%></th>
+        </tr>
+        </thead>
+        <% @kicadnetlist.references.group(:component_id).each do |reference| %>
+        <% component = reference.component %>
+        <tr>
+          <td>
+            <span class="label label-info" style="margin-right:0.5em;">
+              <%= link_to component.mpn, component_path(component) %>
+            </span>
+          </td>
+          <td>
+              <%= link_to icon('cog')+" "+component.mpn, component.octopart_url %>
+          </td>
+          <td>
+              <%= reference.component.footprint %>
+          </td>
+          <td>
+            <% @kicadnetlist.references.where(component_id:component.id).each do |ref| %>
+            <span class="label"><%=link_to ref.name, "#REF_#{ref.name}" %></span>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+    </table>
+</div>

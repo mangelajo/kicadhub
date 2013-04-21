@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130420233346) do
+ActiveRecord::Schema.define(:version => 20130421133249) do
 
   create_table "assembly_guides", :force => true do |t|
     t.string   "description"
@@ -76,6 +76,17 @@ ActiveRecord::Schema.define(:version => 20130420233346) do
   end
 
   add_index "kicadnetlists", ["pcb_id"], :name => "index_kicadnetlists_on_pcb_id"
+
+  create_table "octopart_query_caches", :force => true do |t|
+    t.string   "query_hash",    :null => false
+    t.text     "query"
+    t.text     "json_result"
+    t.integer  "http_response"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "octopart_query_caches", ["query_hash"], :name => "index_octopart_query_caches_on_query_hash"
 
   create_table "pcbs", :force => true do |t|
     t.string   "title"

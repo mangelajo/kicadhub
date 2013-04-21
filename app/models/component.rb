@@ -6,6 +6,8 @@ class Component < ActiveRecord::Base
   has_many :kicadnetlists , :through => :references
   has_many :pcbs , :through =>:kicadnetlists
 
+  after_initialize :check_octopart
+
   def self.find_or_create_from_netlist_data(compo,netlist)
 
     #try to match the component
@@ -16,8 +18,6 @@ class Component < ActiveRecord::Base
 
     if matches.empty?
       component = Component.create(self.data_from_compo(compo))
-      netlist.components << component
-      return component
     else
       component = matches.first
     end
@@ -26,12 +26,53 @@ class Component < ActiveRecord::Base
     return component
   end
 
+  def check_octopart
+    match_octopart # if self.octopart_uid.nil?
+
+  end
+
+  def match_octopart
+
+    query = {}
+
+    query['mpn'] = self.mpn unless self.mpn.nil?
+    query['sku'] = self.supplier_skus.first.sku unless self.supplier_skus.count.zero?
+
+    item = OctopartQueryCache.match(query).results.first.items.first
+    unless item.nil?
+      parse_octopart_item item
+      parse_octopart_offers item.offers
+    end
+  end
+
+  def parse_octopart_offers(offers)
+
+    offers.each  do |offer|
+      sku = SupplierSku.parse_octopart_offer_for_component(offer,self)
+      self.supplier_skus << sku unless self.supplier_skus.include? sku
+    end
+
+  end
+
+  def parse_octopart_item(item)
+    self.octopart_uid = item.uid
+    self.octopart_url = item.octopart_url
+     #TODO Fetch the datasheet URL
+    self.save!
+
+  end
+
+
+  # netlist component scanning
+
   def self.data_from_compo(compo)
       d = {}
       %w[footprint value schlib_part schlib_name].each {|k| d[k]=compo[k]}
       compo.fields.each do |k,v|
         d = self.data_from_field(k,v).merge d
       end
+      d['datasheet_url']=compo.datasheet if compo.datasheet.start_with? 'http://'
+      d['name']=compo.fields.keywords
       return d
   end
 
@@ -46,6 +87,7 @@ class Component < ActiveRecord::Base
 
   def self.data_from_field(key,value)
       if key.downcase.include?"manufacturer"
+        value.gsub!('Digi-Key','Digikey')
         data = self.get_hyphened_data(value)
         d = { manufacturer: data[0] }
         d[:mpn] = data[1] if data.count==2
@@ -59,11 +101,7 @@ class Component < ActiveRecord::Base
       if key.downcase.include?"supplier"
         data = Component.get_hyphened_data(value)
         if data.count==2
-           supplier = Supplier.find_by_name(data[0])
-           if supplier.nil?
-             supplier = Supplier.create(name:data[0])
-             supplier.save!
-           end
+           supplier = Supplier.find_by_name_or_create(data[0])
            sku = supplier.supplier_skus.find_by_sku(data[1])
            if sku.nil?
              sku = SupplierSku.create(sku:data[1],supplier_id:supplier.id)

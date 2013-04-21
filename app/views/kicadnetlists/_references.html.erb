@@ -1,0 +1,27 @@
+
+<h2><%= "References" %></h2>
+<div class="span12">
+
+    <table class="table table-striped span12">
+        <thead>
+        <tr>
+          <th>ID</th><th><%="Component Name" %></th><th><%="Component Footprint" %></th>
+        </tr>
+        </thead>
+        <% @kicadnetlist.references.order(:component_id).each do |reference| %>
+        <tr>
+          <td>
+            <span class="label label-info" style="margin-right:0.5em;" id="REF_<%= reference.name %>">
+              <%= link_to reference.name, component_path(reference.component) %>
+            </span>
+          </td>
+          <td>
+              <%= link_to icon('external-link')+" "+reference.component.mpn, component_path(reference.component) %>
+          </td>
+          <td>
+              <%= reference.component.footprint %>
+          </td>
+        </tr>
+        <% end %>
+    </table>
+</div>
