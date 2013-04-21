@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130420170721) do
+ActiveRecord::Schema.define(:version => 20130420233346) do
 
   create_table "assembly_guides", :force => true do |t|
     t.string   "description"
@@ -50,7 +50,18 @@ ActiveRecord::Schema.define(:version => 20130420170721) do
     t.string   "octopart_url"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.string   "value"
+    t.string   "schlib_part"
+    t.string   "schlib_name"
   end
+
+  create_table "components_supplier_skus", :id => false, :force => true do |t|
+    t.integer "component_id"
+    t.integer "supplier_sku_id"
+  end
+
+  add_index "components_supplier_skus", ["component_id", "supplier_sku_id"], :name => "comp_sku_index"
+  add_index "components_supplier_skus", ["supplier_sku_id", "component_id"], :name => "sku_comp_index"
 
   create_table "kicadnetlists", :force => true do |t|
     t.datetime "date"
@@ -59,9 +70,12 @@ ActiveRecord::Schema.define(:version => 20130420170721) do
     t.string   "xml_content_type"
     t.integer  "xml_file_size"
     t.datetime "xml_updated_at"
+    t.integer  "pcb_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
+
+  add_index "kicadnetlists", ["pcb_id"], :name => "index_kicadnetlists_on_pcb_id"
 
   create_table "pcbs", :force => true do |t|
     t.string   "title"
@@ -109,5 +123,33 @@ ActiveRecord::Schema.define(:version => 20130420170721) do
 
   add_index "references", ["component_id"], :name => "index_references_on_component_id"
   add_index "references", ["kicadnetlist_id"], :name => "index_references_on_kicadnetlist_id"
+
+  create_table "supplier_skus", :force => true do |t|
+    t.string   "sku"
+    t.integer  "moq"
+    t.text     "prices"
+    t.string   "product_url"
+    t.integer  "in_stock_qty"
+    t.integer  "on_order_qty"
+    t.datetime "on_order_eta"
+    t.integer  "factory_lead_days"
+    t.integer  "factory_pack_quantity"
+    t.integer  "order_multiple"
+    t.string   "packaging"
+    t.boolean  "is_authorized"
+    t.datetime "last_updated"
+    t.integer  "supplier_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
+
+  add_index "supplier_skus", ["supplier_id"], :name => "index_supplier_skus_on_supplier_id"
+
+  create_table "suppliers", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

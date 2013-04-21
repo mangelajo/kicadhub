@@ -1,0 +1,60 @@
+<%- model_class = SupplierSku -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:sku) %></th>
+      <th><%= model_class.human_attribute_name(:moq) %></th>
+      <th><%= model_class.human_attribute_name(:prices) %></th>
+      <th><%= model_class.human_attribute_name(:product_url) %></th>
+      <th><%= model_class.human_attribute_name(:in_stock_qty) %></th>
+      <th><%= model_class.human_attribute_name(:on_order_qty) %></th>
+      <th><%= model_class.human_attribute_name(:on_order_eta) %></th>
+      <th><%= model_class.human_attribute_name(:factory_lead_days) %></th>
+      <th><%= model_class.human_attribute_name(:factory_pack_quantity) %></th>
+      <th><%= model_class.human_attribute_name(:order_multiple) %></th>
+      <th><%= model_class.human_attribute_name(:packaging) %></th>
+      <th><%= model_class.human_attribute_name(:is_authorized) %></th>
+      <th><%= model_class.human_attribute_name(:last_updated) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @supplier_skus.each do |supplier_sku| %>
+      <tr>
+        <td><%= link_to supplier_sku.id, supplier_sku_path(supplier_sku) %></td>
+        <td><%= supplier_sku.sku %></td>
+        <td><%= supplier_sku.moq %></td>
+        <td><%= supplier_sku.prices %></td>
+        <td><%= supplier_sku.product_url %></td>
+        <td><%= supplier_sku.in_stock_qty %></td>
+        <td><%= supplier_sku.on_order_qty %></td>
+        <td><%= supplier_sku.on_order_eta %></td>
+        <td><%= supplier_sku.factory_lead_days %></td>
+        <td><%= supplier_sku.factory_pack_quantity %></td>
+        <td><%= supplier_sku.order_multiple %></td>
+        <td><%= supplier_sku.packaging %></td>
+        <td><%= supplier_sku.is_authorized %></td>
+        <td><%= supplier_sku.last_updated %></td>
+        <td><%=l supplier_sku.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_supplier_sku_path(supplier_sku), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      supplier_sku_path(supplier_sku),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_supplier_sku_path,
+            :class => 'btn btn-primary' %>

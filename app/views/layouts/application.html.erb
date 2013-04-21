@@ -26,7 +26,9 @@
 
         <ul class="nav">
           <li <%='class="active"'.html_safe if params[:controller] == 'dashboard' %>><%=link_to 'Dashboard', root_path %></li>
-          <li <%='class="active"'.html_safe if params[:controller] == 'kicadnetlist' %>><%=link_to t('activerecord.models.kicadnetlist'), kicadnetlists_url %></li>
+          <li <%='class="active"'.html_safe if params[:controller] == 'kicadnetlists' %>><%=link_to t('activerecord.models.kicadnetlist'), kicadnetlists_url %></li>
+          <li <%='class="active"'.html_safe if params[:controller] == 'pcbs' %>><%=link_to t('activerecord.models.pcb'), pcbs_url %></li>
+
 
 
           <li class="dropdown">

@@ -1,4 +1,10 @@
 Kicadhub::Application.routes.draw do
+  resources :suppliers
+
+
+  resources :supplier_skus
+
+
   resources :reference_prints
 
 

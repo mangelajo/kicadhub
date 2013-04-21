@@ -8,14 +8,9 @@
   <dd><%= @kicadnetlist.date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:tool) %>:</strong></dt>
   <dd><%= @kicadnetlist.tool %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:xml_file_name) %>:</strong></dt>
-  <dd><%= @kicadnetlist.xml_file_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:xml_content_type) %>:</strong></dt>
-  <dd><%= @kicadnetlist.xml_content_type %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:xml_file_size) %>:</strong></dt>
-  <dd><%= @kicadnetlist.xml_file_size %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:xml_updated_at) %>:</strong></dt>
-  <dd><%= @kicadnetlist.xml_updated_at %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:xml_file) %>:</strong></dt>
+  <dd><%= link_to @kicadnetlist.xml_file_name.html_safe+' '+icon('cloud-download'),@kicadnetlist.xml.url %></dd>
+
 </dl>
 
 <div class="form-actions">

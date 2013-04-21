@@ -1,10 +1,33 @@
 require 'nokogiri'
 require 'pry'
 class Kicadnetlist < ActiveRecord::Base
-  attr_accessible :date, :tool,:xml
+  attr_accessible :date, :tool,:xml,:pcb_id
   has_attached_file :xml
+  has_many :references
+  has_many :components, :through => :references
 
-  before_save :scan_xml
+  belongs_to :pcb
+
+  def netlist_components
+    return @components unless @components.nil?
+    self.scan_xml
+    return @components
+  end
+
+  def render_references
+    self.references.destroy_all
+    netlist_components.each do |netlist_component|
+       self.references << Reference.create_from_netlist_component(netlist_component)
+
+    end
+
+  end
+
+  def render_assembly
+    self.scan_xml
+    self.pcb.assembly_guides.destroy_all unless self.pcb.nil?
+
+  end
 
   def xml_contents
     xml.save
@@ -14,11 +37,11 @@ class Kicadnetlist < ActiveRecord::Base
   end
 
   def scan_xml
+    return unless @components.nil?
     doc = Nokogiri::XML::Document.parse(xml_contents)    { |config| config.nonet }
     @components = scan_components(doc.search('comp'))
-
-    binding.pry
   end
+
 
   def scan_components(xml_components)
     components = []
@@ -30,6 +53,9 @@ class Kicadnetlist < ActiveRecord::Base
       %w[value footprint datasheet].each {|field|
         cmp[field] = c.search(field).first.text
       }
+      libsource = c.search('libsource').first
+      cmp['schlib_name'] = libsource.attributes['lib'].value
+      cmp['schlib_part'] = libsource.attributes['part'].value
 
       cmp['fields'] = scan_fields( c.search('fields/field') )
 

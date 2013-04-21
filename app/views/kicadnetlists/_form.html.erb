@@ -2,6 +2,7 @@
   <%= f.input :date %>
   <%= f.input :tool %>
   <%= f.file_field :xml %>
+  <%= f.input :pcb_id, :collection => Pcb.all.collect{ |t| [ "#{t.title} #{t.id}", t.id ]}%>
 
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>

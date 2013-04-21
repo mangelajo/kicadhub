@@ -1,0 +1,45 @@
+<%- model_class = SupplierSku -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:sku) %>:</strong></dt>
+  <dd><%= @supplier_sku.sku %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:moq) %>:</strong></dt>
+  <dd><%= @supplier_sku.moq %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:prices) %>:</strong></dt>
+  <dd><%= @supplier_sku.prices %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:product_url) %>:</strong></dt>
+  <dd><%= @supplier_sku.product_url %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:in_stock_qty) %>:</strong></dt>
+  <dd><%= @supplier_sku.in_stock_qty %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:on_order_qty) %>:</strong></dt>
+  <dd><%= @supplier_sku.on_order_qty %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:on_order_eta) %>:</strong></dt>
+  <dd><%= @supplier_sku.on_order_eta %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:factory_lead_days) %>:</strong></dt>
+  <dd><%= @supplier_sku.factory_lead_days %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:factory_pack_quantity) %>:</strong></dt>
+  <dd><%= @supplier_sku.factory_pack_quantity %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:order_multiple) %>:</strong></dt>
+  <dd><%= @supplier_sku.order_multiple %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:packaging) %>:</strong></dt>
+  <dd><%= @supplier_sku.packaging %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:is_authorized) %>:</strong></dt>
+  <dd><%= @supplier_sku.is_authorized %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:last_updated) %>:</strong></dt>
+  <dd><%= @supplier_sku.last_updated %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              supplier_skus_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_supplier_sku_path(@supplier_sku), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              supplier_sku_path(@supplier_sku),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
