@@ -5,7 +5,7 @@
   <table class="table table-striped span9">
     <thead>
     <tr>
-      <th><%= "Supplier" %></th><th><%="SKU" %></th><th><%="Stock" %></th> <th><%= "MOQ" %></th>
+      <th><%= "Supplier" %></th><th><%="SKU" %></th><th><%="Stock" %></th> <th><%="Prices"%></th><th><%= "MOQ" %></th>
     </tr>
     </thead>
     <tbody>
@@ -14,6 +14,8 @@
           <td><%= sku.supplier.name unless sku.supplier.nil? %></td>
           <td><%= link_to icon('cog')+" "+sku.sku, sku.product_url %></td>
           <td><%= sku.in_stock_qty %></td>
+          <td>
+                </td>
           <td><%= sku.moq %></td>
         </tr>
     <% end %>

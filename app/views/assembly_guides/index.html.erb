@@ -5,9 +5,11 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= model_class.human_attribute_name(:pcb_id) %></th>
+
+      <th><%= model_class.human_attribute_name(:assembly_top) %></th>
+      <th><%= model_class.human_attribute_name(:assembly_bottom) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -15,9 +17,11 @@
   <tbody>
     <% @assembly_guides.each do |assembly_guide| %>
       <tr>
-        <td><%= link_to assembly_guide.id, assembly_guide_path(assembly_guide) %></td>
-        <td><%= assembly_guide.description %></td>
-        <td><%= assembly_guide.pcb_id %></td>
+        <td><%= link_to assembly_guide.description, assembly_guide_path(assembly_guide) %></td>
+
+        <td><% unless assembly_guide.pcb.nil? %><%= link_to assembly_guide.pcb.title, pcb_path(assembly_guide.pcb) %><% end %></td>
+        <td> <%= image_tag assembly_guide.assembly_top(:thumb)%></td>
+        <td> <%= image_tag assembly_guide.assembly_bottom(:thumb)%></td>
         <td><%=l assembly_guide.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),

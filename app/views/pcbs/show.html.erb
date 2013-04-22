@@ -1,6 +1,13 @@
 <%- model_class = Pcb -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+  <h1><%=@pcb.title %> <%=t '.title', :default => model_class.model_name.human %>
+    <span class="pull-right">
+    <% unless @pcb.assembly_guides.count.zero? %>
+        <%= link_to "Assembly Guide",assembly_guide_path(@pcb.assembly_guides.first), class:"btn btn-primary" %>
+    <% end %>
+
+  </span>
+  </h1>
 </div>
 
 <dl class="dl-horizontal">
@@ -8,22 +15,11 @@
   <dd><%= @pcb.title %></dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @pcb.description %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:file_file_name) %>:</strong></dt>
-  <dd><%= @pcb.file_file_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:file_content_type) %>:</strong></dt>
-  <dd><%= @pcb.file_content_type %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:file_file_size) %>:</strong></dt>
-  <dd><%= @pcb.file_file_size %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:file_updated_at) %>:</strong></dt>
-  <dd><%= @pcb.file_updated_at %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:preview_file_name) %>:</strong></dt>
-  <dd><%= @pcb.preview_file_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:preview_content_type) %>:</strong></dt>
-  <dd><%= @pcb.preview_content_type %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:preview_file_size) %>:</strong></dt>
-  <dd><%= @pcb.preview_file_size %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:file) %>:</strong></dt>
+  <dd><%= link_to "PCB", @pcb.file.url %></dd>
+
   <dt><strong><%= model_class.human_attribute_name(:preview_updated_at) %>:</strong></dt>
-  <dd><%= @pcb.preview_updated_at %></dd>
+  <dd><%= image_tag @pcb.preview(:medium) %></dd>
 </dl>
 
 <div class="form-actions">

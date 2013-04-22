@@ -1,13 +1,26 @@
 <%- model_class = AssemblyGuide -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+  <h1><%= @assembly_guide.description %>
+    <span class="pull-right">
+    <% unless @assembly_guide.pcb.nil? %>
+        <%= link_to "PCB",pcb_path(@assembly_guide.pcb), class:"btn btn-primary" %>
+    <% end %>
+    </span>
+  </h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
-  <dd><%= @assembly_guide.description %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:pcb_id) %>:</strong></dt>
-  <dd><%= @assembly_guide.pcb_id %></dd>
+
+  <dt><strong><%= "Preview" %>:</strong></dt>
+  <dd>
+    <a href="<%= @assembly_guide.assembly_top.url%>"><%= image_tag @assembly_guide.assembly_top(:thumb) %></a>
+    <a href="<%= @assembly_guide.assembly_bottom.url%>"><%= image_tag @assembly_guide.assembly_bottom(:thumb) %></a>
+  </dd>
+
+  <dt><strong><%= "Steps" %>:</strong></dt>
+  <dd>
+     <%= render(partial:'assembly_steps/index', :locals=>{assembly_steps:@assembly_guide.assembly_steps}) %>
+  </dd>
 </dl>
 
 <div class="form-actions">

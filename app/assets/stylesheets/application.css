@@ -12,24 +12,9 @@
  *= require_tree .
  */
 
-.btn a:visited
-{
-    color:white;
-}
-.btn-primary a:visited
-{
-    color:white;
-}
-.btn-danger a:visited
-{
-    color:white;
-}
-
-.label-info a
-{
-    color:white;
-}
-.label-info a:visited
-{
-    color:white;
-}
+.btn:visited { color:black;}
+.btn-primary:visited { color:#FFF; }
+.btn-danger:visited { color:#FFF; }
+.btn-success:visited { color:#FFF; }
+.label a:visited { color:white; }
+.label a{ color:white; }

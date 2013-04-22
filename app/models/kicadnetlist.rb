@@ -55,7 +55,8 @@ class Kicadnetlist < ActiveRecord::Base
       cmp['ref'] = c.attributes['ref'].value
 
       %w[value footprint datasheet].each {|field|
-        cmp[field] = c.search(field).first.text
+        res = c.search(field)
+        cmp[field] = res.first.text unless res.count.zero?
       }
       libsource = c.search('libsource').first
       cmp['schlib_name'] = libsource.attributes['lib'].value

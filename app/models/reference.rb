@@ -1,7 +1,10 @@
 class Reference < ActiveRecord::Base
+
   belongs_to :kicadnetlist
   belongs_to :component
-  attr_accessible :name , :component_id, :kicadnetlist_id
+  belongs_to :assembly_step
+
+  attr_accessible :name , :component_id, :kicadnetlist_id, :assembly_step_id
 
   def self.create_from_netlist_component(netlist_component,netlist)
 

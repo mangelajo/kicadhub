@@ -17,6 +17,10 @@ class Component < ActiveRecord::Base
                                         :schlib_name =>compo.schlib_name)
 
     if matches.empty?
+      matches = self.try_match_component(compo,netlist)
+    end
+
+    if matches.empty?
       component = Component.create(self.data_from_compo(compo))
     else
       component = matches.first
@@ -26,8 +30,14 @@ class Component < ActiveRecord::Base
     return component
   end
 
+  # TODO: Match components not only inside netlist, idea 2) try to match them later
+  # in a requeue task, by footprint data, or octopart id where available
+  def self.try_match_component(compo,netlist)
+    return []
+  end
+
   def check_octopart
-    match_octopart # if self.octopart_uid.nil?
+    match_octopart if self.octopart_uid.nil?
 
   end
 
@@ -36,6 +46,7 @@ class Component < ActiveRecord::Base
     query = {}
 
     query['mpn'] = self.mpn unless self.mpn.nil?
+    query['mpn_or_sku'] = self.value unless query.keys().include? 'mpn'
     query['sku'] = self.supplier_skus.first.sku unless self.supplier_skus.count.zero?
 
     item = OctopartQueryCache.match(query).results.first.items.first
@@ -57,7 +68,10 @@ class Component < ActiveRecord::Base
   def parse_octopart_item(item)
     self.octopart_uid = item.uid
     self.octopart_url = item.octopart_url
-     #TODO Fetch the datasheet URL
+    self.mpn = item.mpn if self.mpn.nil?
+    self.manufacturer = item.manufacturer.name if self.manufacturer.nil?
+    self.name = item.mpn if self.name.nil?
+
     self.save!
 
   end
@@ -71,7 +85,7 @@ class Component < ActiveRecord::Base
       compo.fields.each do |k,v|
         d = self.data_from_field(k,v).merge d
       end
-      d['datasheet_url']=compo.datasheet if compo.datasheet.start_with? 'http://'
+      d['datasheet_url']=compo.datasheet if not compo.datasheet.nil? and compo.datasheet.start_with? 'http://'
       d['name']=compo.fields.keywords
       return d
   end
@@ -101,7 +115,7 @@ class Component < ActiveRecord::Base
       if key.downcase.include?"supplier"
         data = Component.get_hyphened_data(value)
         if data.count==2
-           supplier = Supplier.find_by_name_or_create(data[0])
+           supplier = Supplier.find_or_create_by_name(data[0])
            sku = supplier.supplier_skus.find_by_sku(data[1])
            if sku.nil?
              sku = SupplierSku.create(sku:data[1],supplier_id:supplier.id)

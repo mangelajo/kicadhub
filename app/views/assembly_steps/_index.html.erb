@@ -1,0 +1,35 @@
+<%- model_class = AssemblyStep -%>
+<table class="table table-striped">
+  <thead>
+  <tr>
+
+    <th><%= model_class.human_attribute_name(:front_content_type) %></th>
+    <th><%= model_class.human_attribute_name(:back_content_type) %></th>
+    <th><%= model_class.human_attribute_name(:component_id) %></th>
+    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% assembly_steps.each do |assembly_step| %>
+      <tr>
+        <td><%= image_tag assembly_step.front.url(:thumb)  %></td>
+        <td><%= image_tag assembly_step.back.url(:thumb)  %></td>
+
+        <td><span class="label label-info"><%= link_to assembly_step.component.mpn, component_path(assembly_step.component) %></span></td>
+        <td>
+          <% if false %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_assembly_step_path(assembly_step), :class => 'btn btn-mini' %>
+
+                <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      assembly_step_path(assembly_step),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+         <% end %>
+          <%= link_to "STEP #{assembly_step.index}", assembly_step_path(assembly_step), :class=>'btn btn-success' %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -11,13 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421133249) do
+ActiveRecord::Schema.define(:version => 20130422132830) do
 
   create_table "assembly_guides", :force => true do |t|
     t.string   "description"
     t.integer  "pcb_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "assembly_top_file_name"
+    t.string   "assembly_top_content_type"
+    t.integer  "assembly_top_file_size"
+    t.datetime "assembly_top_updated_at"
+    t.string   "assembly_bottom_file_name"
+    t.string   "assembly_bottom_content_type"
+    t.integer  "assembly_bottom_file_size"
+    t.datetime "assembly_bottom_updated_at"
+    t.integer  "items"
   end
 
   add_index "assembly_guides", ["pcb_id"], :name => "index_assembly_guides_on_pcb_id"
@@ -25,18 +34,22 @@ ActiveRecord::Schema.define(:version => 20130421133249) do
   create_table "assembly_steps", :force => true do |t|
     t.string   "name"
     t.integer  "assembly_guide_id"
-    t.integer  "reference_id"
     t.integer  "index"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
-    t.string   "preview_file_name"
-    t.string   "preview_content_type"
-    t.integer  "preview_file_size"
-    t.datetime "preview_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "front_file_name"
+    t.string   "front_content_type"
+    t.integer  "front_file_size"
+    t.datetime "front_updated_at"
+    t.string   "back_file_name"
+    t.string   "back_content_type"
+    t.integer  "back_file_size"
+    t.datetime "back_updated_at"
+    t.integer  "component_id"
   end
 
   add_index "assembly_steps", ["assembly_guide_id"], :name => "index_assembly_steps_on_assembly_guide_id"
-  add_index "assembly_steps", ["reference_id"], :name => "index_assembly_steps_on_reference_id"
+  add_index "assembly_steps", ["component_id"], :name => "index_assembly_steps_on_component_id"
 
   create_table "components", :force => true do |t|
     t.string   "name"
@@ -128,10 +141,12 @@ ActiveRecord::Schema.define(:version => 20130421133249) do
     t.string   "name"
     t.integer  "kicadnetlist_id"
     t.integer  "component_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "assembly_step_id"
   end
 
+  add_index "references", ["assembly_step_id"], :name => "index_references_on_assembly_step_id"
   add_index "references", ["component_id"], :name => "index_references_on_component_id"
   add_index "references", ["kicadnetlist_id"], :name => "index_references_on_kicadnetlist_id"
 

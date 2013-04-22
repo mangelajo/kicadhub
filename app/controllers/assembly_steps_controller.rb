@@ -15,6 +15,11 @@ class AssemblyStepsController < ApplicationController
   def show
     @assembly_step = AssemblyStep.find(params[:id])
 
+    unless @assembly_step.index.nil?
+      @next = @assembly_step.assembly_guide.assembly_steps.find_by_index(@assembly_step.index+1)
+      @prev = @assembly_step.assembly_guide.assembly_steps.find_by_index(@assembly_step.index-1)
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @assembly_step }

@@ -1,12 +1,16 @@
 <%= simple_form_for @assembly_step, :html => { :class => 'form-horizontal' } do |f| %>
   <%= f.input :name %>
   <%= f.input :assembly_guide_id %>
-  <%= f.input :reference_id %>
   <%= f.input :index %>
-  <%= f.input :preview_file_name %>
-  <%= f.input :preview_content_type %>
-  <%= f.input :preview_file_size %>
-  <%= f.input :preview_updated_at %>
+  <%= f.input :front_file_name %>
+  <%= f.input :front_content_type %>
+  <%= f.input :front_file_size %>
+  <%= f.input :front_updated_at %>
+  <%= f.input :back_file_name %>
+  <%= f.input :back_content_type %>
+  <%= f.input :back_file_size %>
+  <%= f.input :back_updated_at %>
+  <%= f.input :component_id %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

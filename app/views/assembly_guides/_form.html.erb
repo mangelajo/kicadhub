@@ -1,6 +1,15 @@
 <%= simple_form_for @assembly_guide, :html => { :class => 'form-horizontal' } do |f| %>
   <%= f.input :description %>
-  <%= f.input :pcb_id %>
+    <div class="control-group string optional pcb_title">
+      <label class="string optional control-label" for="front">Front</label>
+      <div class="controls"><%= f.file_field :assembly_top %></div>
+      <%= image_tag @assembly_guide.assembly_top(:thumb), :style=>'padding-left:10em;' %>
+    </div>
+    <div class="control-group string optional pcb_title">
+      <label class="string optional control-label" for="back">Back</label>
+      <div class="controls"><%= f.file_field :assembly_bottom %></div>
+      <%= image_tag @assembly_guide.assembly_bottom(:thumb) , :style=>'padding-left:10em;'%>
+    </div>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

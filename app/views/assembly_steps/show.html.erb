@@ -1,28 +1,49 @@
 <%- model_class = AssemblyStep -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+  <h2><%= link_to @assembly_step.assembly_guide.pcb.title,assembly_guide_path(@assembly_step.assembly_guide) %> &gt; <%=t '.title', :default => model_class.model_name.human %>
+  (<%= @assembly_step.index %>/<%= @assembly_step.assembly_guide.assembly_steps.count %>)
+  <span class="pull-right">
+    <% unless @prev.nil? %>
+        <%= link_to "Previous",assembly_step_path(@prev), class:"btn btn-primary" %>
+    <% end %>
+    <% unless @next.nil? %>
+        <%= link_to "Next",assembly_step_path(@next), class:"btn btn-primary" %>
+    <% end %>
+  </span>
+  </h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @assembly_step.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:assembly_guide_id) %>:</strong></dt>
-  <dd><%= @assembly_step.assembly_guide_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:reference_id) %>:</strong></dt>
-  <dd><%= @assembly_step.reference_id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:index) %>:</strong></dt>
-  <dd><%= @assembly_step.index %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:preview_file_name) %>:</strong></dt>
-  <dd><%= @assembly_step.preview_file_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:preview_content_type) %>:</strong></dt>
-  <dd><%= @assembly_step.preview_content_type %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:preview_file_size) %>:</strong></dt>
-  <dd><%= @assembly_step.preview_file_size %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:preview_updated_at) %>:</strong></dt>
-  <dd><%= @assembly_step.preview_updated_at %></dd>
+  <dd><%= @assembly_step.index %>&nbsp;</dd>
+  <dt><strong><%= model_class.human_attribute_name(:component_id) %>:</strong></dt>
+  <dd><span class="label"><%= link_to @assembly_step.component.mpn,component_path(@assembly_step.component) %></span> <strong>Value:</strong> <%=@assembly_step.component.value%>
+   <%= link_to icon('cog')+" Octopart", @assembly_step.component.octopart_url %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:references) %>:</strong></dt>
+  <dd><% @assembly_step.references.each do |ref| %>
+        <span class="label label-info"><%= ref.name %></span>
+      <% end%>
+  </dd>
 </dl>
 
-<div class="form-actions">
+<div class="span12">
+    <div class="span9">
+      <h2>Front</h2>
+      <a href="<%= @assembly_step.front %>">
+          <%= image_tag @assembly_step.front %>
+      </a>
+    </div>
+
+    <div class="span9">
+      <h2>Back</h2>
+      <a href="<%= @assembly_step.back %>">
+      <%= image_tag @assembly_step.back , class:'img-polaroid' %>
+          </a>
+    </div>
+</div>
+
+<div class="form-actions span12">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               assembly_steps_path, :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
